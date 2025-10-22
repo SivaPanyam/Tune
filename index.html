@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TuneAura - Music for Your Mood</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="loginPage" class="page active">
+        <div class="login-container">
+            <div class="login-box">
+                <div class="logo-section">
+                    <i class="fas fa-music logo-icon"></i>
+                    <h1>TuneAura</h1>
+                    <p class="tagline">Music that reads your mood</p>
+                </div>
+                
+                <form id="loginForm" class="auth-form">
+                    <h2>Log in to TuneAura</h2>
+                    <div class="input-group">
+                        <label for="loginEmail">Email or username</label>
+                        <input type="text" id="loginEmail" placeholder="Email or username" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" placeholder="Password" required>
+                    </div>
+                    <div class="remember-forgot">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="rememberMe">
+                            <span>Remember me</span>
+                        </label>
+                        <a href="#" class="forgot-password">Forgot your password?</a>
+                    </div>
+                    <button type="submit" class="btn-primary">Log In</button>
+                    <div class="divider">
+                        <span>OR</span>
+                    </div>
+                    <button type="button" class="btn-social google">
+                        <i class="fab fa-google"></i> Continue with Google
+                    </button>
+                    <button type="button" class="btn-social facebook">
+                        <i class="fab fa-facebook"></i> Continue with Facebook
+                    </button>
+                    <button type="button" class="btn-social apple">
+                        <i class="fab fa-apple"></i> Continue with Apple
+                    </button>
+                </form>
+                
+                <div class="signup-link">
+                    Don't have an account? <a href="#" id="showSignup">Sign up for TuneAura</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Page -->
+    <div id="signupPage" class="page">
+        <div class="login-container">
+            <div class="login-box">
+                <div class="logo-section">
+                    <i class="fas fa-music logo-icon"></i>
+                    <h1>TuneAura</h1>
+                </div>
+                
+                <form id="signupForm" class="auth-form">
+                    <h2>Sign up for free</h2>
+                    <div class="input-group">
+                        <label for="signupEmail">Email</label>
+                        <input type="email" id="signupEmail" placeholder="name@domain.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="signupPassword">Create password</label>
+                        <input type="password" id="signupPassword" placeholder="Create a password" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="signupUsername">Username</label>
+                        <input type="text" id="signupUsername" placeholder="Choose a username" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="signupDOB">Date of birth</label>
+                        <input type="date" id="signupDOB" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Gender</label>
+                        <div class="gender-options">
+                            <label><input type="radio" name="gender" value="male"> Male</label>
+                            <label><input type="radio" name="gender" value="female"> Female</label>
+                            <label><input type="radio" name="gender" value="other"> Non-binary</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">Sign Up</button>
+                </form>
+                
+                <div class="signup-link">
+                    Already have an account? <a href="#" id="showLogin">Log in here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mood Detection Page -->
+    <div id="moodDetectionPage" class="page">
+        <div class="mood-detection-container">
+            <div class="mood-header">
+                <i class="fas fa-music logo-icon"></i>
+                <h1>Welcome to TuneAura</h1>
+                <p>Let's detect your mood to personalize your music experience</p>
+            </div>
+            
+            <div class="mood-options">
+                <div class="mood-card" id="facialMoodCard">
+                    <div class="mood-icon">
+                        <i class="fas fa-smile-beam"></i>
+                    </div>
+                    <h3>Facial Mood Detection</h3>
+                    <p>Let our AI scan your face to detect your current mood</p>
+                    <button class="btn-mood" id="startFacialDetection">
+                        <i class="fas fa-camera"></i> Start Camera
+                    </button>
+                </div>
+                
+                <div class="mood-card" id="manualMoodCard">
+                    <div class="mood-icon">
+                        <i class="fas fa-hand-pointer"></i>
+                    </div>
+                    <h3>Select Your Mood</h3>
+                    <p>Manually choose how you're feeling right now</p>
+                    <button class="btn-mood" id="showMoodSelector">
+                        <i class="fas fa-heart"></i> Choose Mood
+                    </button>
+                </div>
+                
+                <div class="mood-card" id="mindInputCard">
+                    <div class="mood-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Mind Input Mode</h3>
+                    <p>Tell us what's on your mind and we'll play matching songs</p>
+                    <button class="btn-mood" id="showMindInput">
+                        <i class="fas fa-keyboard"></i> Enter Thoughts
+                    </button>
+                </div>
+            </div>
+            
+            <button class="btn-skip" id="skipMoodDetection">Skip for now</button>
+        </div>
+    </div>
+
+    <!-- Facial Detection Modal -->
+    <div id="facialDetectionModal" class="modal">
+        <div class="modal-content facial-modal">
+            <span class="close">&times;</span>
+            <h2>Facial Mood Detection</h2>
+            <div class="camera-container">
+                <video id="webcam" autoplay playsinline></video>
+                <canvas id="canvas" style="display:none;"></canvas>
+                <div class="detection-overlay">
+                    <div class="face-outline"></div>
+                    <p class="detection-status">Position your face in the frame</p>
+                </div>
+            </div>
+            <div class="detected-mood" id="detectedMoodResult" style="display:none;">
+                <h3>Detected Mood: <span id="moodName"></span></h3>
+                <div class="mood-emoji" id="moodEmoji"></div>
+                <button class="btn-primary" id="confirmMood">Continue with this mood</button>
+            </div>
+            <button class="btn-secondary" id="stopCamera">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Manual Mood Selector Modal -->
+    <div id="moodSelectorModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>How are you feeling?</h2>
+            <div class="mood-grid">
+                <div class="mood-item" data-mood="happy">
+                    <div class="mood-emoji">😊</div>
+                    <p>Happy</p>
+                </div>
+                <div class="mood-item" data-mood="energetic">
+                    <div class="mood-emoji">⚡</div>
+                    <p>Energetic</p>
+                </div>
+                <div class="mood-item" data-mood="sad">
+                    <div class="mood-emoji">😢</div>
+                    <p>Sad</p>
+                </div>
+                <div class="mood-item" data-mood="calm">
+                    <div class="mood-emoji">😌</div>
+                    <p>Calm</p>
+                </div>
+                <div class="mood-item" data-mood="romantic">
+                    <div class="mood-emoji">💕</div>
+                    <p>Romantic</p>
+                </div>
+                <div class="mood-item" data-mood="angry">
+                    <div class="mood-emoji">😠</div>
+                    <p>Angry</p>
+                </div>
+                <div class="mood-item" data-mood="focused">
+                    <div class="mood-emoji">🎯</div>
+                    <p>Focused</p>
+                </div>
+                <div class="mood-item" data-mood="nostalgic">
+                    <div class="mood-emoji">🌅</div>
+                    <p>Nostalgic</p>
+                </div>
+                <div class="mood-item" data-mood="party">
+                    <div class="mood-emoji">🎉</div>
+                    <p>Party</p>
+                </div>
+                <div class="mood-item" data-mood="sleepy">
+                    <div class="mood-emoji">😴</div>
+                    <p>Sleepy</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mind Input Modal -->
+    <div id="mindInputModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>What's on your mind?</h2>
+            <p class="modal-subtitle">Share your thoughts, and we'll find the perfect music</p>
+            <textarea id="mindInput" placeholder="E.g., I'm feeling nostalgic about summer days, or I need motivation for my workout, or I'm celebrating a special moment..." rows="5"></textarea>
+            <button class="btn-primary" id="analyzeMind">Find My Music</button>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="mainApp" class="page">
+        <div class="app-container">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <i class="fas fa-music"></i>
+                    <span>TuneAura</span>
+                </div>
+                
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-item active" data-page="home">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="search">
+                        <i class="fas fa-search"></i>
+                        <span>Search</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="library">
+                        <i class="fas fa-book"></i>
+                        <span>Your Library</span>
+                    </a>
+                    <a href="#" class="nav-item" id="moodDetectorNav">
+                        <i class="fas fa-brain"></i>
+                        <span>Mood Detector</span>
+                    </a>
+                </nav>
+                
+                <div class="sidebar-divider"></div>
+                
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-item" id="createPlaylist">
+                        <i class="fas fa-plus-square"></i>
+                        <span>Create Playlist</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="liked">
+                        <i class="fas fa-heart"></i>
+                        <span>Liked Songs</span>
+                    </a>
+                </nav>
+                
+                <div class="playlists-section">
+                    <div class="playlist-item">Summer Vibes</div>
+                    <div class="playlist-item">Workout Mix</div>
+                    <div class="playlist-item">Chill Evening</div>
+                    <div class="playlist-item">Road Trip</div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Top Bar -->
+                <div class="top-bar">
+                    <div class="navigation-buttons">
+                        <button class="nav-btn" id="backBtn">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="nav-btn" id="forwardBtn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="user-menu">
+                        <div class="mood-indicator" id="currentMoodDisplay">
+                            <i class="fas fa-smile"></i>
+                            <span id="currentMoodText">Happy</span>
+                        </div>
+                        <button class="upgrade-btn">Upgrade</button>
+                        <div class="user-profile" id="userProfileBtn">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23535353'/%3E%3Ctext x='50' y='50' text-anchor='middle' dy='.3em' fill='white' font-size='40' font-family='Arial'%3EU%3C/text%3E%3C/svg%3E" alt="User" class="user-avatar">
+                            <span id="username">User</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Dropdown Menu -->
+                <div class="dropdown-menu" id="userDropdown">
+                    <a href="#" id="profileSettings"><i class="fas fa-user"></i> Profile</a>
+                    <a href="#" id="accountSettings"><i class="fas fa-cog"></i> Settings</a>
+                    <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Log out</a>
+                </div>
+
+                <!-- Home Section -->
+                <div class="content-section active" id="homeSection">
+                    <h1 class="page-title">Good afternoon</h1>
+                    
+                    <!-- Mood-based Recommendation Banner -->
+                    <div class="mood-banner">
+                        <div class="mood-banner-content">
+                            <h2>Playing for your mood: <span id="bannerMood">Happy</span></h2>
+                            <p>Music curated based on your current emotional state</p>
+                            <button class="btn-change-mood" id="changeMoodBtn">
+                                <i class="fas fa-sync-alt"></i> Change Mood
+                            </button>
+                        </div>
+                        <div class="mood-banner-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-picks">
+                        <div class="quick-pick-item">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23e74c3c' width='100' height='100'/%3E%3Ctext x='50' y='50' text-anchor='middle' dy='.3em' fill='white' font-size='40'%3E♫%3C/text%3E%3C/svg%3E" alt="Liked Songs">
+                            <div class="quick-pick-info">
+                                <h3>Liked Songs</h3>
+                            </div>
+                        </div>
+                        <div class="quick-pick-item">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%239b59b6' width='100' height='100'/%3E%3Ctext x='50' y='50' text-anchor='middle' dy='.3em' fill='white' font-size='40'%3E🎵%3C/text%3E%3C/svg%3E" alt="Daily Mix">
+                            <div class="quick-pick-info">
+                                <h3>Daily Mix 1</h3>
+                            </div>
+                        </div>
+                        <div class="quick-pick-item">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%231abc9c' width='100' height='100'/%3E%3Ctext x='50' y='50' text-anchor='middle' dy='.3em' fill='white' font-size='40'%3E🎸%3C/text%3E%3C/svg%3E" alt="Rock">
+                            <div class="quick-pick-info">
+                                <h3>Rock Essentials</h3>
+                            </div>
+                        </div>
+                        <div class="quick-pick-item">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23f39c12' width='100' height='100'/%3E%3Ctext x='50' y='50' text-anchor='middle' dy='.3em' fill='white' font-size='40'%3E🎹%3C/text%3E%3C/svg%3E" alt="Jazz">
+                            <div class="quick-pick-info">
+                                <h3>Jazz Vibes</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <section class="content-row">
+                        <h2>Made for you</h2>
+                        <div class="card-grid">
+                            <div class="music-card">
+                                <div class="card-image">
+                                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cdefs%3E%3ClinearGradient id='g1' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23667eea'/%3E%3Cstop offset='100%25' style='stop-color:%23764ba2'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23g1)' width='200' height='200'/%3E%3Ctext x='100' y='100' text-anchor='middle' dy='.3em' fill='white' font-size='60'%3E🎵%3C/text%3E%3C/svg%3E" alt="Discover Weekly">
+                                    <button class="play-btn"><i class="fas fa-play"></i></button>
+                                </div>
+                                <h3>Discover Weekly</h3>
+                                <p>Your weekly mixtape of fresh music</p>
+                            </div>
+                            <div class="music-card">
+                                <div class="card-image">
+                                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cdefs%3E%3ClinearGradient id='g2' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23f093fb'/%3E%3Cstop offset='100%25' style='stop-color:%23f5576c'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23g2)' width='200' height='200'/%3E%3Ctext x='100' y='100' text-anchor='middle' dy='.3em' fill='white' font-size='60'%3E💖%3C/text%3E%3C/svg%3E" alt="Release Radar">
+                                    <button class="play-btn"><i class="fas fa-play"></i></button>
+                                </div>
+                                <h3>Release Radar</h3>
+                                <p>Catch all the latest music</p>
+                            </div>
+                            <div class="music-card">
+                                <div class="card-image">
+                                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cdefs%3E%3ClinearGradient id='g3' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%234facfe'/%3E%3Cstop offset='100%25' style='stop-color:%2300f2fe'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23g3)' width='200' height='200'/%3E%3Ctext x='100' y='100' text-anchor='middle' dy='.3em' fill='white' font-size='60'%3E🌊%3C/text%3E%3C/svg%3E" alt="Chill Mix">
+                                    <button class="play-btn"><i class="fas fa-play"></i></button>
+                                </div>
+                                <h3>Chill Mix</h3>
+                                <p>Kick back to the best new music</p>
+                            </div>
+                            <div class="music-card">
+                                <div class="card-image">
+                                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cdefs%3E%3ClinearGradient id='g4' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2343e97b'/%3E%3Cstop offset='100%25' style='stop-color:%2338f9d7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23g4)' width='200' height='200'/%3E%3Ctext x='100' y='100' text-anchor='middle' dy='.3em' fill='white' font-size='60'%3E⚡%3C/text%3E%3C/svg%3E" alt="Energy Boost">
+                                    <button class="play-btn"><i class="fas fa-play"></i></button>
+                                </div>
+                                <h3>Energy Boost</h3>
+                                <p>Upbeat tracks to energize your day</p>
+                            </div>
+                            <div class="music-card">
+                                <div class="card-image">
+                                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cdefs%3E%3ClinearGradient id='g5' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23fa709a'/%3E%3Cstop offset='100%25' style='stop-color:%23fee140'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23g5)' width='200' height='200'/%3E%3Ctext x='100' y='100' text-anchor='middle' dy='.3em' fill='white' font-size='60'%3E🌅%3C/text%3E%3C/svg%3E" alt="Morning Mood">
+                                    <button class="play-btn"><i class="fas fa-play"></i></button>
+                                </div>
+                                <h3>Morning Mood</h3>
+                                <p>Start your day right</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="content-row">
+                        <h2>Popular playlists</h2>
+                        <div class="card-grid">
+                            <div class="music-card">
+                                <div class="card-image">
+                                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect fill='%23e91e63' width='200' height='200'/%3E%3Ctext x='100' y='100' text-anchor='middle' dy='.3em' fill='white' font-size='50'%3ETop 50%3C/text%3E%3C/svg%3E" alt="Top 50">
+                                    <button class="play-btn"><i class="fas fa-play"></i></button>
+                                </div>
+                                <h3>Top 50 Global</h3>
+                                <p>Your daily update of the most played tracks</p>
+                            </div>
+                            <div class="music-card">
+                                <div class="card-image">
+                                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect fill='%23673ab7' width='200' height='200'/%3E%3Ctext x='100' y='100' text-anchor='middle' dy='.3em' fill='white' font-size='60'%3E🎤%3C/text%3E%3C/svg%3E" alt="Viral Hits">
+                                    <button class="play-btn"><i class="fas fa-play"></i></button>
+                                </div>
+                                <h3>Viral Hits</h3>
+                                <p>Trending music right now</p>
+                            </div>
+                            <div class="music-card">
+                                <div class="card-image">
+                                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect fill='%23ff9800' width='200' height='200'/%3E%3Ctext x='100' y='100' text-anchor='middle' dy='.3em' fill='white' font-size='60'%3E🔥%3C/text%3E%3C/svg%3E" alt="Hot Hits">
+                                    <button class="play-btn"><i class="fas fa-play"></i></button>
+                                </div>
+                                <h3>Hot Hits</h3>
+                                <p>The hottest tracks today</p>
+                            </div>
+                            <div class="music-card">
+                                <div class="card-image">
+                                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect fill='%234caf50' width='200' height='200'/%3E%3Ctext x='100' y='100' text-anchor='middle' dy='.3em' fill='white' font-size='60'%3E🌴%3C/text%3E%3C/svg%3E" alt="Summer">
+                                    <button class="play-btn"><i class="fas fa-play"></i></button>
+                                </div>
+                                <h3>Summer Rewind</h3>
+                                <p>The songs that defined your summer</p>
+                            </div>
+                            <div class="music-card">
+                                <div class="card-image">
+                                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect fill='%2300bcd4' width='200' height='200'/%3E%3Ctext x='100' y='100' text-anchor='middle' dy='.3em' fill='white' font-size='60'%3E🎧%3C/text%3E%3C/svg%3E" alt="Acoustic">
+                                    <button class="play-btn"><i class="fas fa-play"></i></button>
+                                </div>
+                                <h3>Acoustic Classics</h3>
+                                <p>Beautiful acoustic covers and originals</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Search Section -->
+                <div class="content-section" id="searchSection">
+                    <h1 class="page-title">Search</h1>
+                    <div class="search-container">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="What do you want to listen to?">
+                    </div>
+                    
+                    <h2>Browse all</h2>
+                    <div class="genre-grid">
+                        <div class="genre-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <h3>Pop</h3>
+                        </div>
+                        <div class="genre-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <h3>Rock</h3>
+                        </div>
+                        <div class="genre-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <h3>Hip-Hop</h3>
+                        </div>
+                        <div class="genre-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                            <h3>Electronic</h3>
+                        </div>
+                        <div class="genre-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                            <h3>Latin</h3>
+                        </div>
+                        <div class="genre-card" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+                            <h3>Jazz</h3>
+                        </div>
+                        <div class="genre-card" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                            <h3>Classical</h3>
+                        </div>
+                        <div class="genre-card" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">
+                            <h3>Country</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Library Section -->
+                <div class="content-section" id="librarySection">
+                    <h1 class="page-title">Your Library</h1>
+                    <div class="library-tabs">
+                        <button class="tab-btn active">Playlists</button>
+                        <button class="tab-btn">Artists</button>
+                        <button class="tab-btn">Albums</button>
+                    </div>
+                    <div class="library-list">
+                        <div class="library-item">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23e91e63' width='100' height='100'/%3E%3C/svg%3E" alt="Playlist">
+                            <div class="library-item-info">
+                                <h3>Summer Vibes</h3>
+                                <p>Playlist • 45 songs</p>
+                            </div>
+                        </div>
+                        <div class="library-item">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%239c27b0' width='100' height='100'/%3E%3C/svg%3E" alt="Playlist">
+                            <div class="library-item-info">
+                                <h3>Workout Mix</h3>
+                                <p>Playlist • 32 songs</p>
+                            </div>
+                        </div>
+                        <div class="library-item">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%233f51b5' width='100' height='100'/%3E%3C/svg%3E" alt="Playlist">
+                            <div class="library-item-info">
+                                <h3>Chill Evening</h3>
+                                <p>Playlist • 28 songs</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Section -->
+                <div class="content-section" id="settingsSection">
+                    <h1 class="page-title">Settings</h1>
+                    <div class="settings-container">
+                        <div class="settings-group">
+                            <h2><i class="fas fa-user"></i> Profile</h2>
+                            <div class="setting-item">
+                                <label>Username</label>
+                                <input type="text" id="settingsUsername" class="settings-input" placeholder="Your username">
+                            </div>
+                            <div class="setting-item">
+                                <label>Email</label>
+                                <input type="email" id="settingsEmail" class="settings-input" placeholder="your.email@example.com">
+                            </div>
+                            <div class="setting-item">
+                                <label>Profile Picture</label>
+                                <button class="btn-secondary">Change Picture</button>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h2><i class="fas fa-volume-up"></i> Playback</h2>
+                            <div class="setting-item">
+                                <label>Audio Quality</label>
+                                <select class="settings-select">
+                                    <option>Low (96 kbps)</option>
+                                    <option>Normal (160 kbps)</option>
+                                    <option selected>High (320 kbps)</option>
+                                    <option>Very High (Lossless)</option>
+                                </select>
+                            </div>
+                            <div class="setting-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" checked>
+                                    <span>Crossfade songs</span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox">
+                                    <span>Normalize volume</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h2><i class="fas fa-brain"></i> Mood Detection</h2>
+                            <div class="setting-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" checked>
+                                    <span>Enable automatic mood detection</span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" checked>
+                                    <span>Update playlists based on mood</span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label>Mood detection frequency</label>
+                                <select class="settings-select">
+                                    <option>Every song</option>
+                                    <option selected>Every 30 minutes</option>
+                                    <option>Every hour</option>
+                                    <option>Manual only</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h2><i class="fas fa-bell"></i> Notifications</h2>
+                            <div class="setting-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" checked>
+                                    <span>New release notifications</span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" checked>
+                                    <span>Playlist updates</span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox">
+                                    <span>Concert alerts</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h2><i class="fas fa-moon"></i> Display</h2>
+                            <div class="setting-item">
+                                <label>Theme</label>
+                                <select class="settings-select" id="themeSelect">
+                                    <option value="dark" selected>Dark</option>
+                                    <option value="light">Light</option>
+                                    <option value="auto">Auto</option>
+                                </select>
+                            </div>
+                            <div class="setting-item">
+                                <label>Language</label>
+                                <select class="settings-select">
+                                    <option selected>English</option>
+                                    <option>Spanish</option>
+                                    <option>French</option>
+                                    <option>German</option>
+                                    <option>Japanese</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h2><i class="fas fa-shield-alt"></i> Privacy</h2>
+                            <div class="setting-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" checked>
+                                    <span>Private session</span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox">
+                                    <span>Share listening activity</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="settings-actions">
+                            <button class="btn-primary">Save Changes</button>
+                            <button class="btn-secondary">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Now Playing Bar -->
+            <div class="now-playing-bar">
+                <div class="now-playing-left">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%239c27b0' width='100' height='100'/%3E%3Ctext x='50' y='50' text-anchor='middle' dy='.3em' fill='white' font-size='40'%3E♪%3C/text%3E%3C/svg%3E" alt="Current Song">
+                    <div class="now-playing-info">
+                        <h4>Song Title</h4>
+                        <p>Artist Name</p>
+                    </div>
+                    <button class="icon-btn"><i class="far fa-heart"></i></button>
+                </div>
+
+                <div class="now-playing-center">
+                    <div class="playback-controls">
+                        <button class="control-btn"><i class="fas fa-random"></i></button>
+                        <button class="control-btn"><i class="fas fa-step-backward"></i></button>
+                        <button class="control-btn play-pause"><i class="fas fa-play"></i></button>
+                        <button class="control-btn"><i class="fas fa-step-forward"></i></button>
+                        <button class="control-btn"><i class="fas fa-redo"></i></button>
+                    </div>
+                    <div class="progress-container">
+                        <span class="time-current">0:00</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <span class="time-total">3:45</span>
+                    </div>
+                </div>
+
+                <div class="now-playing-right">
+                    <button class="icon-btn"><i class="fas fa-list"></i></button>
+                    <button class="icon-btn"><i class="fas fa-desktop"></i></button>
+                    <button class="icon-btn"><i class="fas fa-volume-up"></i></button>
+                    <div class="volume-bar">
+                        <div class="volume-fill"></div>
+                    </div>
+                    <button class="icon-btn"><i class="fas fa-expand"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
